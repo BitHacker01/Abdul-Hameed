@@ -1,0 +1,28 @@
+file share via smb
+
+I .linux file access from windows
+
+	1.create folder ex: D:/Shared_folder -> right click -> give to access -> next
+	2.in Linux open home directory and search sbm://<Windows IP/Shared_folder>
+
+II. Window file access from Linux
+
+	1.sudo apt install smb 
+	2.sudo systemctl status smbd
+	3.sudo systemctl status nmbd
+	4.sudo nano /etc/samba/smb.conf
+	
+	scroll down at bottom and add ->
+
+	[MyShare]
+	path = /home/kali/Shared_folder
+	browsable = yes
+	writable = yes
+	read only = no
+	guest ok = no
+	
+	5.sudo systemctl restart smbd
+	6.sudo systemctl restart nmbd
+	7.open this pc and search -> \\<kali-ip>\MyShare
+	
+	
