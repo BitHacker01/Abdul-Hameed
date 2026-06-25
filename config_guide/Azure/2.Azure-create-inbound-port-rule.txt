@@ -1,0 +1,8 @@
+Azure v:6 
+
+1. open cmd in windows -> "nslokup myip.opendns.com resolver1.opendns.com" -> open git bash in windows -> curl ifconfig.me -> copy the ip 
+
+2.change defalult ssh rule  in azure:
+
+	azure -> network setting -> scroll down -> select ssh -> action: deny -> save -> create port rule -> inbound port rule -> source: "my ip address" , service: ssh , destination port : 22, priority: 1009, name: "Custom ssh" -> save -> now access the ssh via only your ip
+
