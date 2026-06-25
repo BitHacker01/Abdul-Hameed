@@ -1,0 +1,12 @@
+Azure v:7 
+
+1. create a storage account
+
+subscription: Azure for Student, Resource Group : Select your Group , Storange Account name : abdu94, region: South india -> next advanced -> next networking -> next data protection -> next security -> allow enabling ananymous access on individual containers (only for practice) -> next encryption -> next tags -> review + create -> overview lift bar -> Go to resource -> 
+
+2. create container (like folder)
+
+	Data Storage -> Add container -> name : folder1 , access level: private -> create 
+
+3. upload container (upload file or folder)
+	Data Storage -> upload -> select file -> upload -> lift side ... dot -> copy url and paste on browser - > the file in public access
