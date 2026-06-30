@@ -1,0 +1,11 @@
+Azure v:11
+
+
+cost optimise - auto shutdown
+
+1.create a vm with password instead public key 
+
+2.auto shutdown
+	vm -> select your vm -> operation tab -> Auto-shutdown -> enable:on , Scheduled shutdown: 20:30:00
+time zone : 05:30 -> save 
+

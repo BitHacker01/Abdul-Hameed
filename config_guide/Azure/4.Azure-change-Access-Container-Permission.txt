@@ -1,0 +1,29 @@
+Azure v:8
+
+1.change the public access container to private 
+	right click "folder1" -> change access level -> private 
+
+2. upload a file secure (generate SAS)
+
+	inside folder1 -> upload : file.pdf -> click ... -> Generate SAS -> signing key : key 1 , permission : read , start : 8:20 PM, expiry: 4:20 AM -> generate SAS token and url
+
+3. allow to create , add, write, list, read to container in a timeline
+ 
+	container ex: folder1 -> click ... -> generate SAS -> signing key : key1, permission:create, add, write, list, read; , start: 9:00 AM , expiry: 9:00 PM, allowed ip address: <ip> -> generate SAS token and url
+
+4. access the shared container using azcopy tool
+
+	git bash -> ls | grep -i azcopy if not then install -> ./azcopy.exe <URL> 
+
+	1.copy file from azure server to local -> ./azcopy copy <URL>/filename <dest> --recursive
+	
+	2.upload file local to azure -> ./azcopy copy filename <URL> --recursive
+
+	3.list the server file -> ./azcopy list <URL> 
+
+5.if any changed in generate SAS -> the old URL works to fix this issue -> Security + networking liftside tab -> Access key -> click rotate key
+
+5. if want to disable public access
+	Security + networking liftside tab -> Networking -> public network access ->  Manage -> disable or enable from selected network
+
+

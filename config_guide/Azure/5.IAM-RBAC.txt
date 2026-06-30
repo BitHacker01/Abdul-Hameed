@@ -1,0 +1,22 @@
+Azure v:9
+
+VM user and Storage user. each user only access the own resourc otherwise denied access
+
+1.enable register
+	azure -> search : subscription -> azure subscription 1 -> resource provider -> search: MicrosoftNetwork-> register , search:/microsoft.Compute
+
+2.create RG
+	azure -> search: resource group -> create -> RG name : IAM_Lab, region: central india -> create
+
+3.create users
+	azure- > search: entra id -> add -> users -> user name : infrauser , Displayname : infrauser , password -> Review+ create -> similarly create storage user
+
+4.assign the roles
+	azure -> resource group -> intern-rg ->  Access control(IAM) -> add -> add role assignment -> search: virtual machine contributor -> next -> select member: infrauser -> next -> review + assign -> similarly do same user for "Network Contributor" -> to another Storage user assign "Storage Account contributor"
+
+5.log in to the account 
+	azure ->search: entra id -> overview -> basic info -> click users  the right side number -> "storageuser" -> copy user principal name  -> open -> private tab -> portal.azure.com -> paste user principal name -> next -> password -> next -> install Microsoft authenticate on phone -> scan QR -> enter number in phone -> yes -> only can access storage Account 
+
+user cred
+ storage- Rora236713
+infra- Yuja966318

@@ -1,0 +1,24 @@
+Azure v:12
+
+SSH | RDP via Custom port 
+
+I.SSH change default port 22 to 2222
+
+	1.create one vm with ssh password insted public key
+
+	2. git bash -> cat /etc/os-release -> systemctl edit ssh.socket -> at top -> 
+	[Socket]
+
+	ListenStream=
+	ListenStream=0.0.0.0:2222
+	ListenStream=[::]:2222
+-> ctrl+x and save -> sudo systemctl deamon-reload -> sudo systemctl restart ssh.socket -> sudo ufw allow 2222/tcp -> ss -tulnp | grep 2222
+
+	3.config NSG -> Azure -> VM -> network setting -> scroll down -> add inbound rule -> name: ssh_2222 , service: custom, dest port range:2222, action:allow, Priority:290 -> add
+
+	
+II.run a python server in Linux and access public how to prevent by Mocrpsoft Defender
+	
+	1. Azure -> search: Microsoft defender for cloud -> management -> environment settings -> scroll down -> Azure -> tenant root group - subscription -> CWPP -> server , status: on 
+
+	2. Azure -> VM -> Configuration -> Just-in-time : enable JIT -> refresh page -> open Microsoft defender for cloud -> click vm ... dot -> edit ->  add -> port:80, max request time: 3 -> save -> tik vm box and request access -> port :80, toggle : on , ip range , time: 1 -> open port     

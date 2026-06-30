@@ -1,0 +1,7 @@
+Azure v:13
+
+1. monitoring 
+
+	auzre -> vm -> monitoring -> insights -> monitoring settings ->  tik the box (classic)log-based metrics -> Review + enable -> enable 
+
+	vm -> sudo apt update , sudo apt  install stress-ng -y, check cpu : nproc, check memory : free -gh -> now going to stress the cpu -> for i in {1.10000};do stress-ng --cpu 2 --timeout 240s; done 

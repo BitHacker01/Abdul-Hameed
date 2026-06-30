@@ -1,9 +1,9 @@
 azure v:5
 
-1.resource group -> group name -> region : south india -> review create
+1.resource group -> group name -> region : south india -> review + create
 
 2.virtual machine -> create -> select resource group -> vm name -> region US -> image : ubuntu gen2, suse linux -> x64 -> size -> vcpu:2 , ram:4,8 -> SSH public key -> key pair name: gemini_key -> next desk -> next network -> delete public ip when vm is deleted -> next management -> next monitoring -> review + create -> create -> download private key and create resource  
 
-3. open git -> cd download -> ls -> chmod u+x private_key.pem -> ls lrth -> copy ssh command from azure -> resource visualizer -> connect -> SSH Command -paste in git 
+3. open git -> cd download -> ls -> chmod u+x private_key.pem -> ls lrth -> copy ssh command from azure ->VM -> click vm : Linux ->  resource visualizer -> connect -> SSH Command -paste in git 
 
 4. if we want block ssh -> azure -> networking -> Network Setting -> create rule
