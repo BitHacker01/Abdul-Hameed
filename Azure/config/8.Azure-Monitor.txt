@@ -1,0 +1,18 @@
+Azure v:13
+
+1. monitoring setup
+
+	auzre -> vm -> monitoring -> insights -> monitoring settings ->  tik the box (classic)log-based metrics -> Review + enable -> enable 
+
+	vm -> sudo apt update , sudo apt  install stress-ng -y, check cpu : nproc, check memory : free -gh -> now going to stress the cpu -> for i in {1.10000};do stress-ng --cpu 2 --timeout 240s; done 
+
+2. monitoring 
+	1.metric filter 
+	vm -> monitor -> metrics -> select a scope -> choose vm -> apply ->
+metric : Network out total -> consume of network ,metric: percentage cpu - cpu usage  
+	2.dashboard
+	dashboard with Grafana -> new -> new dashboard -> add virtualization ->azure monitor -> scroll down -> resource : azure subscription -> choose vm; ,  metric : vm availability metric -> change the metric and see the data in graph -> save as -> demo dashboard -> similarly to memory 
+ 	azure -> subscription -> azure subscription ->  resource provider -> search:  Microsoft.dashboard -> register  
+	3.test 
+	vm -> while true;do stress-ng --cpu 2 --timeout 240s;done & -> top  
+

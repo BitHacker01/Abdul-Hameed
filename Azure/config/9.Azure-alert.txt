@@ -1,0 +1,10 @@
+Azure v:13
+
+1.Alert setup
+	azure -> vm -> monitor -> alerts -> create ->alert rule -> select vm -> next condition -> signal name: percentage  cpu,value: greater than, threshold: 85 , check every: 1min , loopback period : 5min -> next actions ->  create action group -> action group name:alertAG, display name: alertAG -> next notification -> notification type: email/sms:fill ypur email -> ok , name: email ; -> next action -> review + create
+-> next details : severity : 1-error, alert rule name: HighCPU -> review + create 
+
+2.test
+	first stress the vm cpu then alert come to email 
+
+	to view dashboard -> monitor -> dashboard with Grafana -> browse saved dashboards  

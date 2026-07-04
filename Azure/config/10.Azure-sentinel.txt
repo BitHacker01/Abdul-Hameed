@@ -1,0 +1,66 @@
+Azure v:14
+
+
+1.connect vm  to lacal vai ssh
+
+2.open cloud shell
+	azure -> cloud shell -> powershell
+
+I.create workspace:
+
+azure -> log analytics workspace-> click defaultworkspace -> delete ,  create -> name:LAB-LAW -> review + create
+
+II.installed the agent for monitoring 
+
+ open shell ->
+ 	1.list all vm: "az vm list -o table", 
+ 
+	2.install extension: "az vm extension set --name AzureMonitorLinuxAgent --publisher Microsoft.Azure.Monitor --vm-name <vmname> --resource-group <rgname> "
+
+	3.list extension: "az vm extension list --vm-name <vmname> --resource-group <rgname> -o table"
+
+
+open vm via ssh -> systemctl status azuremonitorlinuxagent , systemctl status walinuxagent 
+
+III.created the DCR(data collection rule)
+
+	vm -> monitor -> search:data collection rule -> create -> rule name : DCR-demo-vm , next -> add resource -> vm -> next -> add new data source -> tik LOG_AUTH , LOG-AUTHPRIV
+-> next DESTINATION -> add destination -> log analytics workspace : LAB-LAW -> apply -> tik box and save -> next -> review + create -> create 
+
+ vm -> cat /var/log/auth.log
+
+IV.Log coming from dashboard
+
+ 	vm -> logger "demo_vm_logs" , logger "sentineltest"
+
+azure -> search : log analytics workspace -> logs -> select right side : kql mode -> 
+
+"Syslog
+| where SyslogMessage contains "demo_vm_logs" " -> 
+
+"Heartbeat
+| where Computer == <vmname> 
+| sort by TimeGenerated desc"
+
+
+vm -> hostname : for vmname
+
+
+V. Implementation Automated rule to check rules and generate alerts
+
+ azure -> search: sentinel -> add -> configuration -> analytics -> create -> scheduled query rule -> name : checking bruteforce, Mitre attack: credential access -> bruteforce -> password guessing -> next ->  rule query : paste the query , entity mapping : ip -> Address:IPAdress, add entity : Account -> Fullname:User, add identifier -> Displayname:User , Add identifier -> Name:User , Custom details -> add -> username: user , add new -> Sourceipaddress: ipaddress , add new -> attempts:failedattemps , add new -> VMName:computer, alert details -> alert name format: Linux failed logins , query sxheduling-> 5,10 -> next incident settings ->  review + create  -> save 
+
+try to attack vm :
+
+	1.azure -> vm -> search: reset password -> mode:reset password , password -> update 
+
+	2. git bash -> ssh azure@40.81.240.99 -> enter wrong password -> repeat 4 to 6 times 
+
+	3. vm -> cd /var/log/ -> tail auth.log -> it show the failed attempt password 
+
+	4.setup the alert notification to email - azure -> search: sentinel -> LAB-LAW -> click here go to the Defender portal -> home -> investigation & response -> incidents & alerts -> incidents  -> email notification -> add incident notification rule -> name: failed alert -> next -> send only one notification per incident, source: Microsoft sentinel , alert severity: medium , recipient email: hr.abdul94@outlook.com -> next -> submit 
+
+	5.to view the incident - azure -> search: sentinel -> LAB-LAW -> click here go to the Defender portal -> home -> investigation & response -> incidents & alerts
+	
+	 
+

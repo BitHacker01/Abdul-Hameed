@@ -17,7 +17,7 @@ I.SSH change default port 22 to 2222
 	3.config NSG -> Azure -> VM -> network setting -> scroll down -> add inbound rule -> name: ssh_2222 , service: custom, dest port range:2222, action:allow, Priority:290 -> add
 
 	
-II.run a python server in Linux and access public how to prevent by Mocrpsoft Defender
+II.run a python server in Linux and access public how to prevent by Microsoft Defender
 	
 	1. Azure -> search: Microsoft defender for cloud -> management -> environment settings -> scroll down -> Azure -> tenant root group - subscription -> CWPP -> server , status: on 
 
