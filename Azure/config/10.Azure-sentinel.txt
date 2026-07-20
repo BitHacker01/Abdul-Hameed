@@ -20,20 +20,20 @@ II.installed the agent for monitoring
 	3.list extension: "az vm extension list --vm-name <vmname> --resource-group <rgname> -o table"
 
 
-open vm via ssh -> systemctl status azuremonitorlinuxagent , systemctl status walinuxagent 
+open vm via ssh -> systemctl status azuremonitoragent , systemctl status walinuxagent 
 
 III.created the DCR(data collection rule)
 
-	vm -> monitor -> search:data collection rule -> create -> rule name : DCR-demo-vm , next -> add resource -> vm -> next -> add new data source -> tik LOG_AUTH , LOG-AUTHPRIV
+	vm -> monitor -> search:data collection rule -> create -> rule name : DCR-demo-vm , next -> add resource -> vm -> next -> add new data source -> Linux syslog-> tik LOG_AUTH , LOG-AUTHPRIV
 -> next DESTINATION -> add destination -> log analytics workspace : LAB-LAW -> apply -> tik box and save -> next -> review + create -> create 
 
  vm -> cat /var/log/auth.log
 
 IV.Log coming from dashboard
 
- 	vm -> logger "demo_vm_logs" , logger "sentineltest"
+ 	connect vm via ssh -> logger "demo_vm_logs" , logger "sentineltest"
 
-azure -> search : log analytics workspace -> logs -> select right side : kql mode -> 
+azure -> search : log analytics workspace -> LAB-LAW -> logs -> select right side : kql mode -> 
 
 "Syslog
 | where SyslogMessage contains "demo_vm_logs" " -> 
@@ -48,7 +48,18 @@ vm -> hostname : for vmname
 
 V. Implementation Automated rule to check rules and generate alerts
 
- azure -> search: sentinel -> add -> configuration -> analytics -> create -> scheduled query rule -> name : checking bruteforce, Mitre attack: credential access -> bruteforce -> password guessing -> next ->  rule query : paste the query , entity mapping : ip -> Address:IPAdress, add entity : Account -> Fullname:User, add identifier -> Displayname:User , Add identifier -> Name:User , Custom details -> add -> username: user , add new -> Sourceipaddress: ipaddress , add new -> attempts:failedattemps , add new -> VMName:computer, alert details -> alert name format: Linux failed logins , query sxheduling-> 5,10 -> next incident settings ->  review + create  -> save 
+ azure -> search: sentinel -> LAB-LAW -> add -> configuration -> analytics -> create -> scheduled query rule -> name : checking bruteforce, Mitre attack: credential access -> bruteforce -> password guessing -> next ->  rule query : copy paste the query , entity mapping : ip -> Address:IPAdress, add entity : Account -> Fullname:User, add identifier -> Displayname:User , Add identifier -> Name:User , Custom details -> add -> username: user , add new -> Sourceipaddress: ipaddress , add new -> attempts:failedattemps , add new -> VMName:computer, alert details -> alert name format: Linux failed logins , query sxheduling-> 5,10 -> next incident settings ->  review + create  -> save 
+
+query:
+
+"Syslog
+| where SyslogMessage contains "Failed password"
+| extend User = extract(@"for (?:invalid user )?(\S+)", 1, SyslogMessage)
+| extend IPAddress = extract(@"from ([0-9\.]+)", 1, SyslogMessage)
+| summarize FailedAttempts=count() by User, IPAddress, Computer, bin(TimeGenerated, 10m)
+| where FailedAttempts >= 3"
+
+
 
 try to attack vm :
 

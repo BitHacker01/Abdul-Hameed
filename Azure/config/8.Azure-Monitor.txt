@@ -8,11 +8,11 @@ Azure v:13
 
 2. monitoring 
 	1.metric filter 
-	vm -> monitor -> metrics -> select a scope -> choose vm -> apply ->
+	vm -> monitoring -> metrics -> select a scope -> choose vm -> apply ->
 metric : Network out total -> consume of network ,metric: percentage cpu - cpu usage  
 	2.dashboard
 	dashboard with Grafana -> new -> new dashboard -> add virtualization ->azure monitor -> scroll down -> resource : azure subscription -> choose vm; ,  metric : vm availability metric -> change the metric and see the data in graph -> save as -> demo dashboard -> similarly to memory 
- 	azure -> subscription -> azure subscription ->  resource provider -> search:  Microsoft.dashboard -> register  
+ 	azure -> subscription -> azure subscription -> settings ->  resource provider -> search:  Microsoft.dashboard -> register  
 	3.test 
 	vm -> while true;do stress-ng --cpu 2 --timeout 240s;done & -> top  
 
