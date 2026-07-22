@@ -1,0 +1,36 @@
+In the system which will be sharing files (ubuntu):
+1.apdate & install samba protocol
+ sudo apt apdate 
+ sudo apt install samba
+
+2.check the server and enable, disable, status, start, stop the service
+ sudo systemctl check smbd
+
+3.Now create a directory you want to share and set permission to 777
+ mkdir SHARE
+ chmod 777 SHARE
+
+4.Edit the configure file to share the directory
+ sudo nano /etc/samba/smb.conf
+ find -name smb.conf   \\If you don't know the location
+
+5.now write the permissions and path to access the directory
+   [Shared]
+  path = /srv/samba/shared 
+  browseable = yes
+  read only = no
+  writable = yes
+  guest ok = no
+  valid users = yourusername
+  create mask = 0664
+  directory mask = 0775
+
+6.Set the password for user to access the smbd directory
+ sudo smbpasswd -a username \\-a is to add our user to samba user database
+
+Now go to the system which is going to access the smb directory (windows):
+1.find the ip address
+ hostname -I
+
+2.open fileexplorer and enter
+ \\ipaddress\SHARED directory name
